@@ -51,7 +51,7 @@
 <body>
 
     <div id="content" style="display: none;">
-        <video id="myVideo" width="640" height="360" controls autoplay>
+        <video id="myVideo" width="472" height="774" controls autoplay>
             <source src="videos.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -78,7 +78,7 @@
         async function checkPassword() {
             var password = document.getElementById('password').value;
             var hashedPassword = await sha256(password);
-            if (hashedPassword === '58575179c748a64e3a83a76e55da0610e6c3c350e6e5627499587abf65b7511f') { // Hasło 'password' zahashowane przy użyciu SHA-256
+            if (hashedPassword === '58575179c748a64e3a83a76e55da0610e6c3c350e6e5627499587abf65b7511f') {
                 document.getElementById('passwordForm').style.display = 'none';
                 document.getElementById('content').style.display = 'block';
 
