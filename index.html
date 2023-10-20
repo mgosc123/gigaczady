@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona z hasłem</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit&display=swap">
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: black;
+            color: white;
+            padding: 20px;
+        }
+        #content {
+            display: none;
+        }
+        #passwordForm {
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+        }
+        #password {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        #message {
+            display: none;
+            color: red;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .list {
+            color: white;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="content" style="display: none;">
+        <video id="myVideo" width="640" height="360" controls autoplay>
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div id="passwordForm">
+        <label for="password">Wprowadź hasło:</label><br>
+        <input type="password" id="password" name="password">
+        <button onclick="checkPassword()">Potwierdź</button>
+        <p id="message" style="display: none;">Nieprawidłowe hasło. Spróbuj ponownie.</p>
+    </div>
+
+    <script>
+        function sha256(plain) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(plain);
+            return window.crypto.subtle.digest('SHA-256', data).then(hash => {
+                return Array.from(new Uint8Array(hash))
+                    .map(b => b.toString(16).padStart(2, '0'))
+                    .join('');
+            });
+        }
+
+        async function checkPassword() {
+            var password = document.getElementById('password').value;
+            var hashedPassword = await sha256(password);
+            if (hashedPassword === '58575179c748a64e3a83a76e55da0610e6c3c350e6e5627499587abf65b7511f') { // Hasło 'password' zahashowane przy użyciu SHA-256
+                document.getElementById('passwordForm').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+
+                var video = document.getElementById('myVideo');
+                video.style.display = 'block';
+                video.play();
+            } else {
+                document.getElementById('message').style.display = 'block';
+            }
+        }
+    </script>
+
+</body>
+
+</html>
